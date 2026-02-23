@@ -2,7 +2,7 @@
 import RecipeCard from '../components/RecipeCard'
 
 const Favourite = () => {
-    const favourite=  JSON.parse(localStorage.getItem("fav"))
+    const favourite=  JSON.parse(localStorage.getItem("fav")) || []
     
   
     const renderrecipe = favourite.map((recipe)=>{

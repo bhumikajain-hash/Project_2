@@ -7,10 +7,10 @@ import { useState } from "react"
 
 const OpenRecipe = () => {
   const {data,setdata}=useContext(recipecontext)
-  const [favourite, setfavourite] = useState(JSON.parse(localStorage.getItem("fav")) )
+  const [favourite, setfavourite] = useState(JSON.parse(localStorage.getItem("fav")) || [])
 
    const params = useParams()
-  const recipe = data.find((recipe) => params.id === recipe.id)
+  const recipe = data.find((recipe) => params.id == recipe.id)
 
   const {register, handleSubmit, formState:{errors}} = useForm({
      values:recipe,
@@ -21,12 +21,12 @@ const OpenRecipe = () => {
     /*  const copydata = [...data]
     //  copydata.push(recipe)
     //  setdata(copydata)*/
-    const index = data.findIndex((recipe)=> params.id === recipe.id )
+    const index = data.findIndex((recipe)=> params.id == recipe.id )
     const copydata =[...data]
     copydata[index]={...copydata[index], ...recipe}
     setdata(copydata)
     localStorage.setItem("recipe", JSON.stringify(copydata))
-    const favIndex = favourite.findIndex((r) => params.id === r.id);
+    const favIndex = favourite.findIndex((r) => params.id == r.id);
   if (favIndex !== -1) {
     const copyFav = [...favourite];
     copyFav[favIndex] = copydata[index]; // Update the favorite with new details
@@ -37,7 +37,7 @@ const OpenRecipe = () => {
   }
 
   const DeleteHandler = ()=>{
-     const filterdata = data.filter((recipe) => params.id !== recipe.id)
+     const filterdata = data.filter((recipe) => params.id != recipe.id)
      setdata(filterdata)
      localStorage.setItem("recipe", JSON.stringify(filterdata))
      UnFavouriteHandler() 
@@ -61,7 +61,7 @@ const OpenRecipe = () => {
   }
 
   const UnFavouriteHandler= ()=> {
-   const filterdata= favourite.filter((r) => r.id !== recipe?.id)
+   const filterdata= favourite.filter((r) => r.id != recipe?.id)
    setfavourite(filterdata)
    localStorage.setItem("fav", JSON.stringify(filterdata))
   }
@@ -70,7 +70,7 @@ const OpenRecipe = () => {
    recipe? <div className="min-w-[80%] min-h-screen h-auto flex relative ">
       {/* from remix icon, also coy source link of it and paste it in index.html*/}
     <div className="bg-[#54415b] w-[30rem] shadow-xl m-5 h-auto p-5 relative"  >
-      {favourite.find((r) => r.id === recipe.id) ? (<i 
+      {favourite.find((r) => r.id == recipe.id) ? (<i 
       onClick={UnFavouriteHandler} 
       className="ri-poker-hearts-fill text-3xl text-red-400 absolute right-8">
 
