@@ -1,23 +1,30 @@
 import { useContext } from "react"
 import { useForm } from "react-hook-form"
-import {nanoid} from 'nanoid'
+import { nanoid } from 'nanoid'
 import { recipecontext } from "../context/ContextRecipe"
 import { toast } from "react-toastify"
 
 const Create = () => {
   const {data,setdata} = useContext(recipecontext)
     const{register,handleSubmit,formState:{errors},reset}=useForm()
-    const onSubmit= (recipe)=>{
-    //  const copydata = [...data]
-    //  copydata.push(recipe)
-    //  setdata(copydata)
-    recipe.id = nanoid()
 
-     setdata([...data, recipe])
+
+    const onSubmit= (recipe)=>{
+      recipe.id = nanoid()
+     const copydata = [...data]
+     copydata.push(recipe)
+
+     setdata(copydata)
+
+     localStorage.setItem("recipe", JSON.stringify(copydata))
+
+  //   setdata([...data, recipe])
      toast.success("New recipe Added")
       reset();
 
     }
+
+
   return (
     <form className="flex flex-col mt-10 gap-5 w-[40%] m-[30%] p-10 h-[32rem] bg-[#674770] rounded shadow-2xl" 
     onSubmit={handleSubmit(onSubmit)}>
@@ -41,7 +48,7 @@ const Create = () => {
          className="border-b-2 "
          type="text"
          placeholder= "Chef name"/>
-         {errors.url && <small  className="text-red-400 block">{String(errors?.url?.message)}</small>}
+         {errors.chef && <small  className="text-red-400 block">{String(errors?.chef?.message)}</small>}
 
 
          <textarea 

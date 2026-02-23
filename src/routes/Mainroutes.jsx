@@ -4,6 +4,7 @@ import About from "../pages/About"
 import Recipes from "../pages/Recipes"
 import CreateRecipes from "../pages/CreateRecipes"
 import OpenRecipe from "../pages/OpenRecipe"
+import Favourite from "../pages/Favourite"
 
 const Mainroutes = () => {
   return (
@@ -15,6 +16,7 @@ const Mainroutes = () => {
         <Route path="/recipes/details/:id" element={<OpenRecipe />} />
 
         <Route path="/createRecipes" element={<CreateRecipes />} />
+        <Route path="/Favourite" element={<Favourite />}/>
     </Routes>
   )
 }
